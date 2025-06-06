@@ -72,7 +72,7 @@ keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.curren
 keymap("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts)
 
 -- Lsp
--- keymap("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>", opts)
+-- keymap("n", "<leader>lf", "<cmd>FormatDisable<cr>", opts)
 
 -- tmux-vim
 keymap("n", "<C-h>", "<Cmd>NvimTmuxNavigateLeft<CR>", opts)

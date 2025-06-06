@@ -1,43 +1,38 @@
 return {
-    "stevearc/conform.nvim",
-    event = { "BufWritePre" },
-    cmd = { "ConformInfo" },
-    keys = {
-        {
-            -- Customize or remove this keymap to your liking
-            "<leader>lf",
-            function()
-                require("conform").format { async = true, lsp_fallback = true }
-            end,
-            mode = "",
-            desc = "Format buffer",
-        },
+  "stevearc/conform.nvim",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
+  keys = {
+    {
+      -- Customize or remove this keymap to your liking
+      "<leader>lf",
+      function()
+        require("conform").format { async = true, lsp_fallback = true }
+      end,
+      mode = "",
+      desc = "Format buffer",
     },
-    -- Everything in opts will be passed to setup()
-    opts = {
-        -- Define your formatters
-        formatters_by_ft = {
-            lua = { "stylua" },
-            python = { "isort", "black" },
-            json = { { "prettier", "prettierd" } },
-            javascript = { { "prettier", "prettierd" } },
-            typescript = { { "prettier", "prettierd" } },
-            javascriptreact = { { "prettier", "prettierd" } },
-            typescriptreact = { { "prettier", "prettierd" } },
-            go = { "goimports", "gofumpt" },
-            terraform = { "terraform_fmt" }
-        },
-        -- Set up format-on-save
-        format_on_save = { timeout_ms = 500, lsp_fallback = true },
-        -- Customize formatters
-        formatters = {
-            -- shfmt = {
-            --   prepend_args = { "-i", "2" },
-            -- },
-        },
+  },
+  -- Everything in opts will be passed to setup()
+  opts = {
+    -- Define your formatters
+    formatters_by_ft = {
+      lua = { "stylua" },
+      python = { "isort", "black" },
+      json = { "prettier", "prettierd", stop_after_first = true },
+      javascript = { "prettier", "prettierd", stop_after_first = true },
+      typescript = { "prettier", "prettierd", stop_after_first = true },
+      javascriptreact = { "prettier", "prettierd", stop_after_first = true },
+      typescriptreact = { "prettier", "prettierd", stop_after_first = true },
+      go = { "goimports", "gofumpt" },
+      terraform = { "terraform_fmt" },
+      yaml = { "prettier", "prettierd", stop_after_first = true },
     },
-    init = function()
-        -- If you want the formatexpr, here is the place to set it
-        -- vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
-    end,
+    -- Set up format-on-save
+    format_on_save = {
+      -- These options will be passed to conform.format()
+      timeout_ms = 500,
+      lsp_format = "fallback",
+    },
+  },
 }
