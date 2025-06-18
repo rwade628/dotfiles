@@ -3,12 +3,14 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 local config = wezterm.config_builder()
 local is_windows = wezterm.target_triple == "x86_64-pc-windows-msvc"
+local is_darwin = wezterm.target_triple:find("darwin") ~= nil
 
-local projectPath = "~/git"
+local projectPath = wezterm.home_dir .. "/git"
 
 config.color_scheme = "Catppuccin Mocha"
 config.audible_bell = "Disabled"
-config.default_cwd = "~"
+config.default_cwd = wezterm.home_dir
+config.font_size = 12
 
 local workspace_switcher = wezterm.plugin.require("https://github.com/MLFlexer/smart_workspace_switcher.wezterm")
 local sessionizer = wezterm.plugin.require("https://github.com/mikkasendke/sessionizer.wezterm")
@@ -21,6 +23,8 @@ if is_windows then
 	projectPath = "\\\\wsl.localhost\\Ubuntu\\home\\dev\\git"
 
 	-- workspace_switcher.zoxide_path = "/home/linuxbrew/.linuxbrew/bin/zoxide"
+elseif is_darwin then
+	config.font_size = 13
 end
 
 local schema = {
@@ -43,7 +47,6 @@ local barConfig = {
 }
 
 config.font = wezterm.font("MesloLGM Nerd Font Mono")
-config.font_size = 12
 
 local function is_outside_vim(pane)
 	return pane:get_title():find("nv") == nil
@@ -127,7 +130,7 @@ config.mouse_bindings = {
 }
 
 bar.apply_to_config(config, barConfig)
-sessionizer.apply_to_config(config, true)
+sessionizer.apply_to_config(config)
 workspace_switcher.apply_to_config(config)
 
 return config
