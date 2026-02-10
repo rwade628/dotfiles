@@ -21,14 +21,15 @@
 
       # Clone or update dotfiles
       if [ ! -d "$DOTFILES" ]; then
-        git clone https://github.com/rwade628/dotfles.git "$DOTFILES"
+        git clone https://github.com/rwade628/dot.nix.git "$DOTFILES"
       else
         cd "$DOTFILES"
         git fetch origin
         git reset --hard origin/main
       fi
 
-      cd "$DOTFILES/configs/nixos"
+      # cd "$DOTFILES/configs/nixos"
+      cd "$DOTFILES"
 
       # Update flake inputs
       nix flake update
@@ -45,7 +46,7 @@
       COMMIT_ID=$(jq -r .nodes.nixpkgs.locked.rev flake.lock)
 
       # Build all host configurations (--cores 1 to limit memory usage)
-      for host in pc; do
+      for host in nixos; do
         echo "Building $host..."
         if nix build .#nixosConfigurations.$host.config.system.build.toplevel \
           --out-link "/var/lib/nix-auto-build/result-$host" \
