@@ -1,0 +1,20 @@
+## enable or disable automatic sync
+auto_sync = true
+
+## enable or disable automatic update checks
+update_check = false
+
+## address of the sync server
+sync_address = "https://atuin.lab.nijho.lt"
+enter_accept = true
+
+[stats]
+# Set commands where we should consider the subcommand for statistics. Eg, kubectl get vs just kubectl
+common_subcommands = [
+ "git",
+ "g",
+ "uv",
+]
+
+[theme]
+name = "autumn"
