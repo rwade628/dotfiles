@@ -4,7 +4,7 @@
 {
   services.fwupd.enable = true;
   services.syncthing.enable = true;
-  services.tailscale.enable = true;
+  # services.tailscale.enable = true;
 
   # --- System Stability ---
   services.earlyoom = {
