@@ -21,7 +21,7 @@
 
       # Clone or update dotfiles
       if [ ! -d "$DOTFILES" ]; then
-        git clone https://github.com/rwade628/dot.nix.git "$DOTFILES"
+        git clone https://github.com/rwade628/dotfles.git "$DOTFILES"
       else
         cd "$DOTFILES"
         git fetch origin
