@@ -28,8 +28,7 @@
         git reset --hard origin/main
       fi
 
-      cd "$DOTFILES"
-      # cd "$DOTFILES/configs/nixos"
+      cd "$DOTFILES/configs/nixos"
 
       # Update flake inputs
       nix flake update
@@ -46,8 +45,7 @@
       COMMIT_ID=$(jq -r .nodes.nixpkgs.locked.rev flake.lock)
 
       # Build all host configurations (--cores 1 to limit memory usage)
-      # for host in pc nuc hp; do
-      for host in nixos; do
+      for host in pc; do
         echo "Building $host..."
         if nix build .#nixosConfigurations.$host.config.system.build.toplevel \
           --out-link "/var/lib/nix-auto-build/result-$host" \

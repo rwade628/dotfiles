@@ -6,26 +6,33 @@
   nixpkgs.config = {
     cudaSupport = true;
     packageOverrides = pkgs: {
-      ollama = (pkgs.ollama.override {
-        # Only build for RTX 3090 (sm_86) instead of all 7 default architectures
-        cudaArches = [ "sm_86" ];
-      }).overrideAttrs (oldAttrs: rec {
-        version = "0.15.5";
-        src = pkgs.fetchFromGitHub {
-          owner = "ollama";
-          repo = "ollama";
-          rev = "v${version}";
-          hash = "sha256-VJrAUHX+BVQXsH34BDI4YqVXEqD14ERnKhSpMByAdrQ=";
-        };
-        vendorHash = "sha256-r7bSHOYAB5f3fRz7lKLejx6thPx0dR4UXoXu0XD7kVM=";
-        postFixup = pkgs.lib.replaceStrings [
-          ''mv "$out/bin/app" "$out/bin/.ollama-app"''
-        ] [
-          ''if [ -e "$out/bin/app" ]; then
-             mv "$out/bin/app" "$out/bin/.ollama-app"
-           fi''
-        ] oldAttrs.postFixup;
-      });
+      ollama =
+        (pkgs.ollama.override {
+          # Only build for RTX 5070 Ti (sm_120) instead of all 7 default architectures
+          cudaArches = [ "sm_120" ];
+        }).overrideAttrs
+          (oldAttrs: rec {
+            version = "0.15.5";
+            src = pkgs.fetchFromGitHub {
+              owner = "ollama";
+              repo = "ollama";
+              rev = "v${version}";
+              hash = "sha256-VJrAUHX+BVQXsH34BDI4YqVXEqD14ERnKhSpMByAdrQ=";
+            };
+            vendorHash = "sha256-r7bSHOYAB5f3fRz7lKLejx6thPx0dR4UXoXu0XD7kVM=";
+            postFixup =
+              pkgs.lib.replaceStrings
+                [
+                  ''mv "$out/bin/app" "$out/bin/.ollama-app"''
+                ]
+                [
+                  ''
+                    if [ -e "$out/bin/app" ]; then
+                                 mv "$out/bin/app" "$out/bin/.ollama-app"
+                               fi''
+                ]
+                oldAttrs.postFixup;
+          });
 
       # Override llama-cpp to latest version b6150 with CUDA support
       llama-cpp =
@@ -54,9 +61,9 @@
             # This enables AVX, AVX2, AVX-512, FMA, etc. for your specific CPU
             # NOTE: This is intentionally opposite of nixpkgs (which uses -DGGML_NATIVE=off
             # for reproducible builds). We sacrifice portability for faster CPU layers.
-            cmakeFlags = (oldAttrs.cmakeFlags or []) ++ [
+            cmakeFlags = (oldAttrs.cmakeFlags or [ ]) ++ [
               "-DGGML_NATIVE=ON"
-              "-DCMAKE_CUDA_ARCHITECTURES=86" # RTX 3090 - needed since sandbox has no GPU
+              "-DCMAKE_CUDA_ARCHITECTURES=120" # RTX 5070 Ti - needed since sandbox has no GPU
             ];
 
             # Disable Nix's NIX_ENFORCE_NO_NATIVE which strips -march=native flags
