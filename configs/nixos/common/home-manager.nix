@@ -2,8 +2,13 @@
 { lib, pkgs, ... }:
 
 {
-  home-manager.users.basnijholt =
-    { config, lib, pkgs, ... }:
+  home-manager.users.ryan =
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       home.stateVersion = "25.05";
 
@@ -18,7 +23,7 @@
           run ${pkgs.git-lfs}/bin/git-lfs install
           export GIT_LFS_SKIP_SMUDGE=1
           run ${pkgs.git}/bin/git -c url."https://github.com/".insteadOf="git@github.com:" \
-            clone --depth 1 https://github.com/basnijholt/dotfiles.git "${config.home.homeDirectory}/dotfiles"
+            clone --depth 1 https://github.com/rwade628/dotfiles.git "${config.home.homeDirectory}/dotfiles"
           unset GIT_LFS_SKIP_SMUDGE
           run cd "${config.home.homeDirectory}/dotfiles" && ${pkgs.git-lfs}/bin/git-lfs pull
           run cd "${config.home.homeDirectory}/dotfiles" && ${pkgs.git}/bin/git \

@@ -16,7 +16,7 @@
     }:
     {
       darwinConfigurations = {
-        "basnijholt-macbook-pro" = nix-darwin.lib.darwinSystem {
+        "ryan-macbook-pro" = nix-darwin.lib.darwinSystem {
           modules = [
             ./configuration.nix
             ./homebrew.nix
@@ -31,7 +31,7 @@
             }
           ];
         };
-        "basnijholt-macbook-pro-2" = nix-darwin.lib.darwinSystem {
+        "ryan-macbook-pro-2" = nix-darwin.lib.darwinSystem {
           modules = [
             ./configuration.nix
             ./homebrew.nix

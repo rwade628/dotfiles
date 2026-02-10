@@ -4,11 +4,13 @@
 {
   services.comin = {
     enable = true;
-    remotes = [{
-      name = "origin";
-      url = "https://github.com/basnijholt/dotfiles.git";
-      branches.main.name = "main";
-    }];
+    remotes = [
+      {
+        name = "origin";
+        url = "https://github.com/rwade628/dotfiles.git";
+        branches.main.name = "nixos";
+      }
+    ];
     repositorySubdir = "configs/nixos";
     hostname = config.networking.hostName;
   };

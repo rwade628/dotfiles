@@ -3,7 +3,7 @@
 
 {
   # --- Mechabar Dependencies (Home Manager) ---
-  home-manager.users.basnijholt.home.packages = with pkgs; [
+  home-manager.users.ryan.home.packages = with pkgs; [
     bluetui
     bluez
     brightnessctl
@@ -38,7 +38,10 @@
     ];
     config = {
       common.default = "gtk";
-      hyprland.default = [ "hyprland" "gtk" ];
+      hyprland.default = [
+        "hyprland"
+        "gtk"
+      ];
     };
   };
 

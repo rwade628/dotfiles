@@ -7,9 +7,12 @@
     description = "Backup TrueNAS configuration";
     wants = [ "network-online.target" ];
     after = [ "network-online.target" ];
-    path = with pkgs; [ curl coreutils ];
+    path = with pkgs; [
+      curl
+      coreutils
+    ];
     script = ''
-      BACKUP_DIR="/home/basnijholt/truenas-config-backups"
+      BACKUP_DIR="/home/ryan/truenas-config-backups"
       mkdir -p "$BACKUP_DIR"
       curl -sf -X POST "http://truenas.local/api/v2.0/config/save" \
         -H "Authorization: Bearer $(cat /root/.truenas-api-key)" \

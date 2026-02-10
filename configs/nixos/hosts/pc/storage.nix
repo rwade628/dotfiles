@@ -8,7 +8,7 @@
   services.snapper.configs = {
     root = {
       SUBVOLUME = "/";
-      ALLOW_USERS = [ "basnijholt" ];
+      ALLOW_USERS = [ "ryan" ];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
       TIMELINE_LIMIT_HOURLY = 6;
@@ -22,7 +22,7 @@
     };
     home = {
       SUBVOLUME = "/home";
-      ALLOW_USERS = [ "basnijholt" ];
+      ALLOW_USERS = [ "ryan" ];
       TIMELINE_CREATE = true;
       TIMELINE_CLEANUP = true;
       TIMELINE_LIMIT_HOURLY = 6;
@@ -39,7 +39,7 @@
   # Snapper snapshot roots must exist with correct permissions
   systemd.tmpfiles.rules = [
     "d /.snapshots 0755 root root -"
-    "d /home/.snapshots 0755 basnijholt users -"
+    "d /home/.snapshots 0755 ryan users -"
   ];
 
   # --- Swap ---

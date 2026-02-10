@@ -14,7 +14,7 @@ VM_NAME="${1:-dev-vm}"
 MEMORY="${2:-8GiB}"
 CPUS="${3:-4}"
 DISK_SIZE="${4:-50GiB}"
-FLAKE_REF="${FLAKE_REF:-github:basnijholt/dotfiles?dir=configs/nixos}"
+FLAKE_REF="${FLAKE_REF:-github:rwade628/dotfiles?dir=configs/nixos}"
 ISO_PATH="${ISO_PATH:-/tmp/nixos.iso}"
 
 # Nix binary cache configuration
@@ -31,42 +31,42 @@ echo ""
 
 # Check if ISO exists, offer to build it
 if [[ ! -f "$ISO_PATH" ]]; then
-    echo "NixOS ISO not found at $ISO_PATH"
-    echo ""
-    read -p "Build it now? [y/N] " -n 1 -r
-    echo ""
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Building NixOS installer ISO..."
-        nix build "$NIXOS_DIR#nixosConfigurations.installer.config.system.build.isoImage" \
-            --option substituters "$NIX_SUBSTITUTERS" \
-            --option trusted-public-keys "$NIX_TRUSTED_KEYS" \
-            --out-link /tmp/nixos-iso-result
-        cp /tmp/nixos-iso-result/iso/*.iso "$ISO_PATH"
-        rm /tmp/nixos-iso-result
-        echo "ISO built: $ISO_PATH"
-    else
-        echo "Aborted. Build the ISO manually with:"
-        echo "  cd configs/nixos"
-        echo "  nix build .#nixosConfigurations.installer.config.system.build.isoImage"
-        echo "  cp result/iso/*.iso $ISO_PATH"
-        exit 1
-    fi
+  echo "NixOS ISO not found at $ISO_PATH"
+  echo ""
+  read -p "Build it now? [y/N] " -n 1 -r
+  echo ""
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo "Building NixOS installer ISO..."
+    nix build "$NIXOS_DIR#nixosConfigurations.installer.config.system.build.isoImage" \
+      --option substituters "$NIX_SUBSTITUTERS" \
+      --option trusted-public-keys "$NIX_TRUSTED_KEYS" \
+      --out-link /tmp/nixos-iso-result
+    cp /tmp/nixos-iso-result/iso/*.iso "$ISO_PATH"
+    rm /tmp/nixos-iso-result
+    echo "ISO built: $ISO_PATH"
+  else
+    echo "Aborted. Build the ISO manually with:"
+    echo "  cd configs/nixos"
+    echo "  nix build .#nixosConfigurations.installer.config.system.build.isoImage"
+    echo "  cp result/iso/*.iso $ISO_PATH"
+    exit 1
+  fi
 fi
 
 # Check if VM already exists
 if incus info "$VM_NAME" &>/dev/null; then
-    echo "Error: VM '$VM_NAME' already exists"
-    echo "Delete it with: incus delete $VM_NAME --force"
-    exit 1
+  echo "Error: VM '$VM_NAME' already exists"
+  echo "Delete it with: incus delete $VM_NAME --force"
+  exit 1
 fi
 
 # Create empty VM
 echo "Creating VM..."
 incus create "$VM_NAME" --vm --empty \
-    -c limits.memory="$MEMORY" \
-    -c limits.cpu="$CPUS" \
-    -c security.secureboot=false \
-    -d root,size="$DISK_SIZE"
+  -c limits.memory="$MEMORY" \
+  -c limits.cpu="$CPUS" \
+  -c security.secureboot=false \
+  -d root,size="$DISK_SIZE"
 
 # Attach ISO
 echo "Attaching NixOS ISO..."
@@ -79,17 +79,17 @@ incus start "$VM_NAME"
 # Wait for VM to get an IP
 echo "Waiting for VM to boot and get IP..."
 for i in {1..60}; do
-    IP=$(incus list "$VM_NAME" -f csv -c 4 | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' | head -1 || true)
-    if [[ -n "$IP" ]]; then
-        break
-    fi
-    sleep 2
+  IP=$(incus list "$VM_NAME" -f csv -c 4 | grep -oE '([0-9]{1,3}\.){3}[0-9]{1,3}' | head -1 || true)
+  if [[ -n "$IP" ]]; then
+    break
+  fi
+  sleep 2
 done
 
 if [[ -z "$IP" ]]; then
-    echo "Error: VM did not get an IP address"
-    echo "Check with: incus list"
-    exit 1
+  echo "Error: VM did not get an IP address"
+  echo "Check with: incus list"
+  exit 1
 fi
 
 echo ""
@@ -112,7 +112,7 @@ echo "    --option trusted-public-keys \"$NIX_TRUSTED_KEYS\" \\"
 echo "    --flake '$FLAKE_REF#dev-vm'"
 echo ""
 echo "  # Set user password"
-echo "  nixos-enter --root /mnt -c 'passwd basnijholt'"
+echo "  nixos-enter --root /mnt -c 'passwd ryan'"
 echo ""
 echo "After installation, run from your host:"
 echo ""

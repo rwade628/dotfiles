@@ -3,8 +3,14 @@
 
 {
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
-    trusted-users = [ "root" "basnijholt" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    trusted-users = [
+      "root"
+      "ryan"
+    ];
     substituters = [
       "https://cache.nixos.org/"
       "http://nix-cache.local:5000"

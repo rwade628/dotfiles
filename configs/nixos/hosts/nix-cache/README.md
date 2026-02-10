@@ -18,7 +18,7 @@ incus launch images:nixos/unstable nix-cache \
 
 ```bash
 incus exec nix-cache -- nixos-rebuild switch \
-  --flake "github:basnijholt/dotfiles/main?dir=configs/nixos#nix-cache" \
+  --flake "github:rwade628/dotfiles/main?dir=configs/nixos#nix-cache" \
   --option sandbox false
 ```
 

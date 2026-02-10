@@ -53,22 +53,23 @@ Boot from installer ISO, then:
 # Partition and mount (replace #hp with #nuc for NUC)
 nix --extra-experimental-features 'nix-command flakes' run github:nix-community/disko -- \
   --mode destroy,format,mount --yes-wipe-all-disks \
-  --flake github:basnijholt/dotfiles/main?dir=configs/nixos#hp
+  --flake github:rwade628/dotfiles/main?dir=configs/nixos#hp
 
 # Install
 nixos-install --root /mnt --no-root-passwd \
   --option substituters "http://nix-cache.local:5000 https://cache.nixos.org https://nix-community.cachix.org https://cache.nixos-cuda.org" \
   --option trusted-public-keys "build-vm-1:CQeZikX76TXVMm+EXHMIj26lmmLqfSxv8wxOkwqBb3g= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M=" \
-  --flake github:basnijholt/dotfiles/main?dir=configs/nixos#hp
+  --flake github:rwade628/dotfiles/main?dir=configs/nixos#hp
 ```
 
 For Incus VM installation, see the instructions in:
+
 - `hosts/hp/incus-overrides.nix` (HP VM)
 - `hosts/nuc/incus-overrides.nix` (NUC VM)
 - `hosts/pc/incus-overrides.nix` (PC VM)
 - `scripts/create-dev-vm.sh` (dev-vm helper script)
 
-> **Note:** Default password is `nixos`. Change it after first boot with `passwd basnijholt`.
+> **Note:** Default password is `nixos`. Change it after first boot with `passwd ryan`.
 
 ## Hetzner Cloud Installation
 
@@ -77,7 +78,7 @@ echo 'HCLOUD_TOKEN="your-token"' > hosts/hetzner/.env  # Create API token at het
 ./hosts/hetzner/deploy.py deploy                       # Deploys CAX11 ARM server (€3.29/mo)
 ```
 
-After deployment, set your password: `ssh basnijholt@<IP>` then `passwd`.
+After deployment, set your password: `ssh ryan@<IP>` then `passwd`.
 
 ## Nix Cache Server Setup (nix-cache)
 

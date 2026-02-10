@@ -23,14 +23,14 @@ ARCH="$(uname -m)"
 # Map to dotbins naming
 [[ "$OS" == "Darwin" ]] && DOTBINS_OS="macos" || DOTBINS_OS="linux"
 case "$ARCH" in
-  x86_64)        DOTBINS_ARCH="amd64" ;;
-  aarch64|arm64) DOTBINS_ARCH="arm64" ;;
-  *)             DOTBINS_ARCH="" ;;
+x86_64) DOTBINS_ARCH="amd64" ;;
+aarch64 | arm64) DOTBINS_ARCH="arm64" ;;
+*) DOTBINS_ARCH="" ;;
 esac
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 DOTFILES_BRANCH="${DOTFILES_BRANCH:-public}"
-DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/basnijholt/dotfiles.git}"
+DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/rwade628/dotfiles.git}"
 
 if [[ -e "$DOTFILES_DIR" ]]; then
   log "Target directory already exists: $DOTFILES_DIR"
@@ -124,7 +124,7 @@ else
 
   if [[ -n "$CURRENT_NAME" && -n "$CURRENT_EMAIL" ]]; then
     log "Preserving existing git identity: $CURRENT_NAME <$CURRENT_EMAIL>"
-    cat > "$PERSONAL_CONFIG" << EOF
+    cat >"$PERSONAL_CONFIG" <<EOF
 [user]
 	email = $CURRENT_EMAIL
 	name = $CURRENT_NAME
